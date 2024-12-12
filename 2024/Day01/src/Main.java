@@ -23,7 +23,7 @@ public class Main {
         }
 
         System.out.println(findDifferencesOfLowestValues(locationsA, locationsB));
-
+        System.out.println(findSimilarityScore(locationsA, locationsB));
     }
 
     static int findDifferencesOfLowestValues(List<Integer> locationsA, List<Integer> locationsB) {
@@ -34,5 +34,19 @@ public class Main {
             differenceBetweenLocationAAndB += Math.abs(locationsA.get(i) - locationsB.get(i));
         }
         return differenceBetweenLocationAAndB;
+    }
+
+    static int findSimilarityScore(List<Integer> locationsA, List<Integer> locationsB) {
+        int similarityScore = 0;
+        for (int locationA : locationsA) {
+            int timesValueInB = 0;
+            for (int locationB : locationsB) {
+                if (locationA == locationB) {
+                    timesValueInB++;
+                }
+            }
+            similarityScore += timesValueInB * locationA;
+        }
+        return similarityScore;
     }
 }
