@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,5 +21,18 @@ public class Main {
         } catch(FileNotFoundException e) {
             e.printStackTrace();
         }
+
+        System.out.println(findDifferencesOfLowestValues(locationsA, locationsB));
+
+    }
+
+    static int findDifferencesOfLowestValues(List<Integer> locationsA, List<Integer> locationsB) {
+        int differenceBetweenLocationAAndB = 0;
+        Collections.sort(locationsA);
+        Collections.sort(locationsB);
+        for (int i = 0; i < locationsA.size(); i++) {
+            differenceBetweenLocationAAndB += Math.abs(locationsA.get(i) - locationsB.get(i));
+        }
+        return differenceBetweenLocationAAndB;
     }
 }
