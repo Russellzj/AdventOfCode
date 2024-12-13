@@ -25,12 +25,17 @@ public class Main {
 
         //Total Safe Reports
         int safe = 0;
+        int safeRemoved = 0;
         for (List<Integer> report : redReactor) {
             if (isSafe(report)) {
                 safe++;
             }
+            if (isSafeRemovableHard(report)) {
+                safeRemoved++;
+            }
         }
         System.out.println("Number of safe reports: " + safe);
+        System.out.println("Number of safe reports with removable value: " + safeRemoved);
     }
 
     //Tests if the values located in the report are safe or unsafe
@@ -48,6 +53,18 @@ public class Main {
             }
         }
         return true;
+    }
+
+    //Same as isSafe except we are allowed to remove one of the elements
+    public static boolean isSafeRemovableHard(List<Integer> report) {
+        for (int i = 0; i < report.size(); i++) {
+            List<Integer> tempReport = new ArrayList<>(report);
+            tempReport.remove(i);
+            if (isSafe(tempReport)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
