@@ -18,14 +18,62 @@ public class Main {
             e.printStackTrace();
         }
 
-        //Prints WordSearch ArrayList
-        for (char[] theLine : wordSearch) {
-            System.out.println(theLine);
-        }
+        
+        System.out.println(findWord(wordSearch, "XMAS"));
     }
 
-    public static int findXmas(List<List<Character>> wordSearch) {
-        int xmas = 0;
-        return 0;
+    public static int findWord(List<char[]> wordSearch, String word) {
+        char[] wordToFind= word.toCharArray();
+        int wordCount = 0;
+        //Traverses All values looking for X
+        for (int i = 0; i < wordSearch.size(); i++) {
+            for (int j = 0; j < wordSearch.get(i).length; j++) {
+                if (wordSearch.get(i)[j] == wordToFind[0]) {
+                    //IF X is found check surrounding values for M
+                    for (int k = -1 ; k <= 1 ; k++) {
+                        for (int l = -1 ; l <= 1 ; l++) {
+                            if (k + i >= 0 && l + j >= 0) {
+                                if (k + i < wordSearch.size() && l + j < wordSearch.get(i).length) {
+                                    if (wordSearch.get(i + k)[j + l] == wordToFind[1]) {
+                                        if (isWordInDirection(wordSearch, i + k, j + l, wordToFind, 2, k, l)) {
+                                            wordCount++;
+                                            System.out.println("Match at X: " + i + " " + j);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return wordCount;
     }
+
+
+    
+
+
+    public static boolean isWordInDirection(List<char[]> wordSearch, int x, int y, char[] word,
+                                            int letter, int dx, int dy) {
+        int nextX = x + dx ;
+        if (nextX < wordSearch.size() && nextX >= 0) {
+            int nextY = y + dy;
+            if (nextY < wordSearch.get(nextX).length && nextY >= 0) {
+                char test = wordSearch.get(nextX)[nextY];
+                if(wordSearch.get(nextX)[nextY] == word[letter]) {
+                    if (letter >= word.length - 1) {
+                        return true;
+                    } else {
+                        return isWordInDirection(wordSearch, nextX, nextY, word, letter + 1, dx, dy);
+                    }
+                } else {
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
+
 }
