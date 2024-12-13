@@ -16,6 +16,19 @@ public class Main {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        System.out.println(corrupt);
+        int multiplyTotal = multiplyCorruptData(corrupt.toString());
+        System.out.println(multiplyTotal);
+    }
+
+    public static int multiplyCorruptData(String corrupt) {
+        int total = 0;
+        Pattern pattern = Pattern.compile("mul\\(\\d+,\\d+\\)");
+        Matcher matcher = pattern.matcher(corrupt);
+        while (matcher.find()) {
+            String numbericalValues = matcher.group(0).substring(4, matcher.group(0).length() - 1);
+            String[] numericalValue = numbericalValues.split(",");
+            total += Integer.parseInt(numericalValue[0]) * Integer.parseInt(numericalValue[1]);
+        }
+        return total;
     }
 }
