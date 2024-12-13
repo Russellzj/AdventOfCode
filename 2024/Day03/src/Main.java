@@ -16,8 +16,8 @@ public class Main {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        int multiplyTotal = multiplyCorruptData(corrupt.toString());
-        System.out.println(multiplyTotal);
+        System.out.println("All Multiply Total: " + multiplyCorruptData(corrupt.toString()));
+        System.out.println("Do Multiply Total: " + multiplyCorruptData(findDoCommands(corrupt.toString())));
     }
 
     public static int multiplyCorruptData(String corrupt) {
@@ -30,5 +30,20 @@ public class Main {
             total += Integer.parseInt(numericalValue[0]) * Integer.parseInt(numericalValue[1]);
         }
         return total;
+    }
+
+    public static String findDoCommands(String corrupt) {
+        StringBuilder doCommands = new StringBuilder();
+        int stringPosition = 0;
+        int nextDo = 0;
+        while (nextDo != -1) {
+            nextDo = corrupt.indexOf("do");
+            String nextDoString = corrupt.substring(0, nextDo);
+            corrupt = corrupt.substring(nextDo + 2);
+            if (!nextDoString.matches("n't.*")) {
+                doCommands.append(nextDoString);
+            }
+        }
+        return doCommands.toString();
     }
 }
