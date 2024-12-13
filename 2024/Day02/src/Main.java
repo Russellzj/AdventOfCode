@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
+        //Reads in file and adds data to ArrayList
         File locations = new File("2024//Day02//Data//RedReactor");
         List<List<Integer>> redReactor = new ArrayList<>();
         try (Scanner sc = new Scanner(locations)){
@@ -20,6 +22,32 @@ public class Main {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        System.out.println(redReactor.size());
+
+        //Total Safe Reports
+        int safe = 0;
+        for (List<Integer> report : redReactor) {
+            if (isSafe(report)) {
+                safe++;
+            }
+        }
+        System.out.println("Number of safe reports: " + safe);
     }
+
+    //Tests if the values located in the report are safe or unsafe
+    public static boolean isSafe(List<Integer> report) {
+        boolean increase = report.get(0) < report.get(1);
+        for (int i = 1; i < report.size(); i++) {
+            if (report.get(i) == report.get(i - 1)) {
+                return false;
+            }
+            if (Math.abs(report.get(i) - report.get(i - 1)) > 3) {
+                return false;
+            }
+            if (increase ^ report.get(i) > report.get(i - 1)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
