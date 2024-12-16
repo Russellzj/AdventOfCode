@@ -41,7 +41,8 @@ public class Main {
             e.printStackTrace();
         }
 
-        List<Integer> correctRow = new ArrayList<>();
+        List<Integer> correctRows = new ArrayList<>();
+        List<Integer> allRows = new ArrayList<>();
 
         for (int[] pages : pageOrder) {
             for (int page : pages) {
@@ -54,22 +55,42 @@ public class Main {
                 for (int j = i - 1; j >= 0 ; j--) {
                     if (orderRules.containsKey(pages[i])) {
                         if (orderRules.get(pages[i]).contains(pages[j])) {
-                            System.out.println("Value: " + pages[j] + " out of order because of " + pages[i]);
+                            //System.out.println("Value: " + pages[j] + " out of order because of " + pages[i]);
+                            int tempPage = pages[j];
+                            pages[j] = pages[i];
+                            pages[i] = tempPage;
+                            i = 0;
                             isCorrect = false;
                         }
                     }
                 }
             }
             if (isCorrect) {
-                correctRow.add(pages[pages.length / 2]);
+                correctRows.add(pages[pages.length / 2]);
+            } else {
+                System.out.println("Row out of order");
+                System.out.print("New Page Order: ");
+                for (int page : pages) {
+                    System.out.print(page + " ");
+                }
+                System.out.println();
+                allRows.add(pages[pages.length / 2]);
             }
 
+
         }
-        int totalRow = 0;
-        for (int row : correctRow) {
-            totalRow += row;
+        int totalCorrectRow = 0;
+
+        for (int row : correctRows) {
+            totalCorrectRow += row;
         }
-        System.out.println(totalRow);
+
+        int totalAllRows = 0;
+        for (int row : allRows) {
+            totalAllRows += row;
+        }
+        System.out.println("Total middle value of correct rows: " + totalCorrectRow);
+        System.out.println("Total middle values of corrected rows: " + totalAllRows);
     }
 
 }
