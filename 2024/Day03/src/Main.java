@@ -36,8 +36,12 @@ public class Main {
         StringBuilder doCommands = new StringBuilder();
         int stringPosition = 0;
         int nextDo = 0;
-        while (nextDo != -1) {
+
+        while (true) {
             nextDo = corrupt.indexOf("do");
+            if (nextDo == -1) {
+                break;
+            }
             String nextDoString = corrupt.substring(0, nextDo);
             corrupt = corrupt.substring(nextDo + 2);
             if (!nextDoString.matches("n't.*")) {
