@@ -35,6 +35,16 @@ public class Main {
         }
         System.out.println("Box GPS: " + robot.getBoxGPS());
 
+        LargeRobot largeRobot = new LargeRobot(map);
+        largeRobot.printMap();
+        for (char movement : movements) {
+            //System.out.println("Direction: " + movement);
+            largeRobot.move(movement);
+            //largeRobot.printMap();
+        }
+
+        largeRobot.printMap();
+        System.out.println("Large Box GPS: " + largeRobot.getBoxGPS());
 
 
         System.out.println("END");
