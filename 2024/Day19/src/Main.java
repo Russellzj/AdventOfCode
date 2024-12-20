@@ -4,15 +4,16 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
+        Towel towels = new Towel();
+
         File file = new File("2024/Day19/Data/TestTowelDesigns");
-        Set<String> towels = new HashSet<>();
         List<String> patterns = new ArrayList<>();
         try (Scanner sc = new Scanner(file);) {
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
                 if (line.isEmpty()) break;
                 for (String towel : line.split(", ")) {
-                    towels.add(towel);
+                    towels.addTowel(towel);
                 }
             }
             while (sc.hasNextLine()) {
@@ -23,7 +24,15 @@ public class Main {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
+        int possiblePatterns = 0;
+        for (String pattern : patterns) {
+            System.out.print(pattern);
+            System.out.println(": Pattern can be created: " + towels.findPatter(pattern));
+            if (towels.findPatter(pattern)) {
+                possiblePatterns++;
+            }
+        }
+        System.out.println("Possible Patterns: " + possiblePatterns);
         System.out.println("END");
     }
 }
