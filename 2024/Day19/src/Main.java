@@ -24,15 +24,27 @@ public class Main {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
+        int regexPattern = 0;
+        for (String pattern : patterns) {
+            if (towels.findRegex(pattern)) {
+                regexPattern++;
+            }
+        }
+        System.out.println("Acceptable patterns using regex: " + regexPattern);
+
+        /*
         int possiblePatterns = 0;
         for (String pattern : patterns) {
-            System.out.print(pattern);
-            System.out.println(": Pattern can be created: " + towels.findPatter(pattern));
-            if (towels.findPatter(pattern)) {
+            //System.out.print(pattern);
+            //System.out.println(": Pattern can be created: " + towels.findRegex(pattern));
+            if (towels.findDesign(pattern)) {
                 possiblePatterns++;
             }
         }
-        System.out.println("Possible Patterns: " + possiblePatterns);
+
+         */
+
         System.out.println("END");
     }
 }
