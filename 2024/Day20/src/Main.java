@@ -6,20 +6,22 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        List<List<Character>> race = new ArrayList<>();
+        List<List<Character>> track = new ArrayList<>();
         File file = new File("2024//Day20//Data//TestRaceTrack");
         try (Scanner sc = new Scanner(file)) {
             while (sc.hasNextLine()) {
                 char[] line = sc.nextLine().toCharArray();
                 List<Character> raceLine = new ArrayList<>();
-                for (char track : line) {
-                    raceLine.add(track);
+                for (char identifier : line) {
+                    raceLine.add(identifier);
                 }
-                race.add(raceLine);
+                track.add(raceLine);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        Race race = new Race(track);
+        System.out.println(race.findPath());
         System.out.println("End");
     }
 }
