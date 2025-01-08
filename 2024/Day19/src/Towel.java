@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Towel {
     private Set<String> towels = new HashSet<>();
-    private Set<String> testedDesigns = new HashSet<>();
+    private int solutions = 0;
     private String regex = "()+";
 
     public void addTowel(String towel) {
@@ -14,33 +14,37 @@ public class Towel {
         }
     }
 
-    public boolean findDesign(String pattern) {
+    public int findDesign(String pattern) {
+        solutions = 0;
+        Set<String> currentTowels = new HashSet<>(towels);
         for (int i = 1; i <= pattern.length(); i++) {
             String testPattern = pattern.substring(0, i);
-            if (towels.contains(pattern.substring(0, i))) {
-                if(pattern.length() == i) {
-                    return true;
-                } else if (nextDesign(pattern, i)) {
-                    return true;
-                }
+            while (currentTowels.contains(testPattern)) {
+                currentTowels.remove(testPattern);
+                nextDesign(pattern, i);
             }
         }
-        return false;
+        return solutions;
     }
 
-    private boolean nextDesign(String pattern, int location) {
+    private void nextDesign(String pattern, int location) {
+        Set<String> currentTowels = new HashSet<>(towels);
         for (int i = pattern.length(); i > location; i--) {
             String testPattern = pattern.substring(location, i);
-            if (testedDesigns.contains(testPattern) || towels.contains(testPattern)) {
-                if(pattern.length() == i) {
-                    return true;
-                } else if (nextDesign(pattern, i)) {
-                    testedDesigns.add(pattern.substring(0, i));
-                    return true;
+            while (currentTowels.contains(testPattern)) {
+                if (pattern.length() == i) {
+                    solutions++;
+                    if (solutions % 1000000 == 0) {
+                        System.out.println("Current Solutions: " + solutions / 1_000_000 + "M");
+                    }
+                    currentTowels.remove(testPattern);
+                }
+                else {
+                    currentTowels.remove(testPattern);
+                    nextDesign(pattern, i);
                 }
             }
         }
-        return false;
     }
 
     public boolean findRegex(String pattern) {

@@ -6,7 +6,8 @@ public class Main {
     public static void main(String[] args) {
         Towel towels = new Towel();
 
-        File file = new File("2024/Day19/Data/TestTowelDesigns");
+        File file = new File("2024/Day19/Data/TowelDesigns");
+        List<String> designs = new ArrayList<>();
         List<String> patterns = new ArrayList<>();
         try (Scanner sc = new Scanner(file);) {
             while (sc.hasNextLine()) {
@@ -14,6 +15,7 @@ public class Main {
                 if (line.isEmpty()) break;
                 for (String towel : line.split(", ")) {
                     towels.addTowel(towel);
+                    designs.add(towel);
                 }
             }
             while (sc.hasNextLine()) {
@@ -33,15 +35,30 @@ public class Main {
         }
         System.out.println("Acceptable patterns using regex: " + regexPattern);
 
+        double solutions = 0;
+        for (String pattern : patterns) {
+            System.out.println(pattern);
+            double currentPattern = StringPatternMatcher.countWaysToCreateString(pattern, designs);
+            System.out.printf("%.0f\n", currentPattern);
+            solutions += currentPattern;
+
+        }
+        System.out.printf("Solutions: %.9f", solutions );
+
+
         /*
         int possiblePatterns = 0;
         for (String pattern : patterns) {
-            //System.out.print(pattern);
-            //System.out.println(": Pattern can be created: " + towels.findRegex(pattern));
-            if (towels.findDesign(pattern)) {
-                possiblePatterns++;
-            }
+            System.out.println(pattern);
+            int currentPattern = towels.findDesign(pattern);
+            System.out.println("Design has " + currentPattern + "many solutions");
+            possiblePatterns += currentPattern;
+
         }
+
+
+
+        System.out.println("Possible patterns: " + possiblePatterns);
 
          */
 
